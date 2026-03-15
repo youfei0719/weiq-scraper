@@ -1,0 +1,12 @@
+# 隐私与凭证文件 (绝对不能上传)
+state.json
+
+# 本地数据源与抓取结果 (保护你和你客户的商业数据)
+accounts.xlsx
+weiq_results*.xlsx
+~$*.xlsx
+
+# Python 虚拟环境与缓存
+.venv/
+__pycache__/
+.pytest_cache/
