@@ -1,7 +1,21 @@
-# WEIQ 商业数据调度舱 (WEIQ Scraper Pro)
+# 📊 WEIQ 商业数据调度舱 (WEIQ Scraper Pro)
 
-专为 MCN 机构打造的“社交媒体资产自动化监控与商业价值评估系统”。
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://streamlit.io/)
+[![Playwright](https://img.shields.io/badge/engine-Playwright-green.svg)](https://playwright.dev/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![X Follow](https://img.shields.io/twitter/follow/youfei0719_?style=social)](https://x.com/youfei0719_)
+
+**专为 MCN 机构打造的“社交媒体资产自动化监控与商业价值评估系统”。**
+
 本项目基于 `Playwright` 构建了高可用的底层防风控爬虫引擎，并结合 `Streamlit` + `Plotly` 打造了 0 前端 Bug、极具商业质感的 SaaS 级交互式数据监控大盘。
+
+---
+
+## 🔗 保持联系 (Connect)
+如果您对本项目有任何建议，或者需要定制化的商业数据解决方案，欢迎联系：
+* **𝕏 (Twitter)**: [@youfei0719_](https://x.com/youfei0719_)
+* **GitHub**: [youfei0719](https://github.com/youfei0719)
 
 ---
 
@@ -9,143 +23,108 @@
 
 ### 🚀 v3.0 商业级 BI 大盘与引擎重构 (最新)
 **更新时间：2026-03-16**
-**重构方向：从“数据抓取工具”正式升维至“企业级商业智能(BI)调度舱”**
-
-**1. 可视化大盘彻底重构 (`main.py`)**
-* **摒弃无效图表**：移除了拥挤的散点图和易导致 DOM 崩溃的无限制柱状图，引入“主从联动交互 (Master-Detail)”范式。
-* **金融级热力树图 (Treemap)**：引入全新的资产结构热力树图，以区块面积代表粉丝体量，以红绿灯色带（绿-黄-红）直观映射 CPM 成本高低，完美解决 500+ 账号高密度展示的视觉问题。
-* **微观对比防崩溃机制**：加入了 Top-N 智能截断与表内嵌图机制。全选几百个账号时，系统会自动拦截并精准提取各项指标的 Top 20 生成对标图，彻底杜绝图表无限拉伸。
-* **高管级数据清洗**：底层重写智能单位换算器，所有图表标签强制转换为“1.2亿”、“4.5万”等符合国内商业阅读习惯的中文字样。
-
-**2. 爬虫底层引擎重构 (`scraper.py`)**
-* **指纹彻底抹除**：引入 `playwright-stealth` 深度抹除 WebDriver 自动化特征，配合真人 Viewport 尺寸随机切换，大幅降低风控拦截率。
-* **双轨制落盘方案 (高容错)**：引入 SQLite (`weiq_data.db`) 作为主数据池，采用 `REPLACE INTO` 实现幂等更新防丢防锁；同时使用内存映射导出 Excel。即使 `weiq_results.xlsx` 被占用锁定，数据也已在数据库安全存活。
+* **可视化大盘彻底重构 (`main.py`)**：引入“主从联动交互 (Master-Detail)”范式，彻底杜绝 500+ 账号下的图表拉伸崩溃。
+* **金融级热力树图 (Treemap)**：区块面积代表粉丝体量，红绿灯色带实时映射 CPM 成本高低，解决高密度展示痛点。
+* **微观对比防崩溃机制**：内置 Top-N 智能截断，自动提取各项指标 Top 20 生成对比图。
+* **高管级数据清洗**：重写智能单位换算器，所有标签强制转换为“1.2亿”、“4.5万”等中文格式。
+* **爬虫引擎重构 (`scraper.py`)**：引入 `playwright-stealth` 深度抹除自动化特征。
+* **双轨制落盘方案**：SQLite 数据库并发容灾 + 内存映射 Excel 导出，确保数据安全。
 
 ### 🚀 v2.0 史诗级更新
 **更新时间：2026-03-09**
-本次更新对底层抓取引擎进行了脱胎换骨的重构，正式迈入商业级数据监控标准：
-* **全量 15 项指标扩容**：单账号数据监控从 2 项暴增至 15 项。现已支持：粉丝数、直发CPM、阅读中位数等，以及极具价值的最近 20 篇博文趋势。
-* **Viewport 懒加载击穿**：注入“自动化平滑深度滚动算法”，强制唤醒 ECharts 与底部 AJAX 网络请求，告别漏抓。
-* **父级区块逆向解析 (降维打击)**：新增父区块结构化逆向解析策略。无视 DOM 多层嵌套、CSS 混淆及图标干扰，精准提取核心数值。
-* **死链与空页诊断**：自动识别博主下架、UID 变更或未被平台收录的空白页，防止程序死锁。
-* **旧表隔离机制**：启动时智能校验表头结构，发现不兼容自动加上时间戳备份并生成全新净表。
+* **全量 15 项指标扩容**：支持粉丝数、直发 CPM、阅读中位数、最近 20 篇博文趋势等。
+* **Viewport 懒加载击穿**：注入平滑深度滚动算法，强制唤醒底部数据请求。
+* **父级区块逆向解析**：无视 DOM 多层嵌套与 CSS 混淆，精准提取核心数值。
 
 ---
 
-## 📖 详尽使用教程 (小白与高管友好版)
+## 📖 详尽使用教程 (Mac & Win 双端保姆级)
 
-### 第一步：环境配置
-本项目采用当今最高速的 `uv` 工具链进行管理，完美支持 Windows 与 Mac 环境。
+### 第一步：环境初始化
 
-1. 在终端输入以下命令安装核心依赖：
-```bash
-uv pip install streamlit pandas plotly openpyxl playwright playwright-stealth
-```
+#### 🍏  MacBook (M1/M2/M3/M4) 用户：
+1. **进入目录**：`cd ~/Documents/weiq-scraper-main` (请替换为你的实际路径)
+2. **安装依赖**：
+   ```bash
+   uv pip install streamlit pandas plotly openpyxl playwright playwright-stealth
+   ```
+3. **下载 Mac 专用内核**：
+   ```bash
+   uv run playwright install chromium
+   ```
 
-2. 安装自动化浏览器内核引擎：
-```bash
-uv run playwright install chromium
-```
+#### 🪟 Windows 用户：
+1. **进入目录**：`cd /d E:\exe\cpm\weiq-scraper-main` (请替换为你的实际路径)
+2. **安装依赖与内核**：
+   ```cmd
+   uv pip install streamlit pandas plotly openpyxl playwright playwright-stealth
+   uv run playwright install chromium
+   ```
 
 ### 第二步：准备监控名单 (本地安全保护)
-1. 在项目根目录下创建一个名为 `accounts.xlsx` 的 Excel 表格。
-2. 必须包含两列表头：`账号ID`（博主名字）和 `uid`（WEIQ平台对应的唯一ID）。
-3. 🔒 **绝对隐私安全**：你的监控名单、提取的商业机密数据、以及平台登录凭证，全部在本地物理机处理，已被 `.gitignore` 彻底隔离，绝不会被上传至 GitHub 或任何云端。
+1. 在项目根目录下创建 `accounts.xlsx`。
+2. 必须包含两列表头：`账号ID`（博主名）和 `uid`（WEIQ平台唯一ID）。
+3. 🔒 **绝对隐私安全**：该文件已被 `.gitignore` 排除，**监控名单与凭证绝不会上传至云端**。
 
 ### 第三步：启动底层爬虫引擎
-在终端输入并回车：
-```bash
-uv run python scraper.py
-```
-⚠️ **首次运行极度重要**：
-第一次启动时，弹出的浏览器会处于未登录状态。请在弹出的窗口中手动扫码或输入验证码登录。成功进入 WEIQ 操作大厅后，回到终端界面按下【回车键】。系统会自动捕获并生成一个 `state.json` 凭证文件。以后无论跑多少次，系统都会免扫码全自动静默运行！
+**执行命令**：`uv run python scraper.py`
+1. **首次登录**：程序会弹出浏览器窗口，请手动扫码登录。
+2. **权限捕获**：成功进入 WEIQ 后台后，**请务必回到终端按下【回车键】**。
+3. **静默运行**：系统会自动保存 `state.json`，以后运行将全自动静默采集，无需再次扫码。
 
-### 第四步：启动商业数据大盘
-爬虫运行结束（或正在后台运行时），你可以随时启动可视化调度舱。再开一个终端窗口输入：
-```bash
-streamlit run main.py
-```
-此时会自动在浏览器弹出可视化大盘。系统会自动计算大盘中位数，你可以勾选下方表格的账号，体验丝滑的横向联动对标。
+### 第四步：启动商业大盘 (可视化决策)
+**执行命令**：`streamlit run main.py`
+
+#### 💡 深度解惑：如果我不小心关闭了看板页面？
+* **场景 A：终端窗口还在运行**
+  只需在浏览器地址栏重新输入 `http://localhost:8501` 即可找回页面。
+* **场景 B：终端窗口也被关了**
+  **不需要重新爬取数据！** 只需再次输入 `streamlit run main.py`，系统会瞬间从本地数据库加载历史数据，耗时不到 2 秒。
+* **场景 C：采集时看板一直开着**
+  直接运行 `scraper.py`。爬完后，看板右上角会提示 `Source file changed`，点击 **Rerun** 即可刷新。
 
 ---
 
 ## 📑 核心函数日志 (Function Log)
 
 **爬虫引擎模块 (`scraper.py`)**
-* `init_browser(p)`: 隐身浏览器初始化。随机切换视口尺寸，注入 stealth 抹除指纹，挂载 state.json 实现免扫码持久化。
-* `extract_metrics(page)`: 逆向视觉树提取。基于 TreeWalker 和父级节点向上遍历，无视 DOM 多层嵌套精准提取 15 项核心数值。
-* `check_anti_spider(page)`: 风控熔断器。实时扫描页面重定向与验证码，命中则触发终端响铃并暂停程序等待人工接管。
-* `append_to_storage(...)`: 双轨落盘机制。同步写入 SQLite DB 和 Excel，解决高频 IO 导致的文件锁宕机问题。
+* `init_browser(p)`: 隐身浏览器初始化。随机视口尺寸，注入 stealth 抹除指纹，挂载 state.json。
+* `extract_metrics(page)`: 逆向视觉树提取。基于 TreeWalker 绕过复杂 DOM 精准提取 15 项数值。
+* `check_anti_spider(page)`: 风控熔断器。实时扫描重定向与验证码，命中则触发终端响铃并暂停。
+* `append_to_storage(...)`: 双轨落盘机制。同步写入 SQLite DB 和 Excel，解决文件锁宕机问题。
 
 **商业大盘模块 (`main.py`)**
-* `format_chinese_unit(num)`: 商业语义转化。将底层庞大数字智能转换为“亿”、“万”等极简中文文本。
-* `load_data()`: 数据缓存装载。带有 `@st.cache_data` 装饰器，提取 Excel 进行深度清洗与 0 值过滤，保障数据链纯净。
-* `create_clean_bar_chart(...)`: 微观对比图渲染。生成无网格线的极简条形图，内置 Top-N 截断保护与动态自适应高度，支持多维度正/倒排序。
+* `format_chinese_unit(num)`: 商业语义转化。将庞大数字智能转换为“亿”、“万”等极简文本。
+* `load_data()`: 数据缓存装载。带有 `@st.cache_data` 装饰器，进行深度清洗与 0 值过滤。
+* `create_clean_bar_chart(...)`: 微观对比渲染。极简条形图，内置 Top-N 截断保护。
 
 ---
 
 ## 🏗️ 项目架构设计 (Architecture)
 
-1. **采集引擎层 (`scraper.py`)**：单向解耦运行，负责突破反爬、提取数据并安全落盘至本地数据库与表格。
-2. **数据落盘层 (高容错)**：SQLite (`weiq_data.db`) 负责并发容灾，Excel (`weiq_results.xlsx`) 负责直观查阅。
-3. **决策可视化层 (`main.py`)**：纯读取状态，零交互干扰。通过 Streamlit + Plotly 实现宏观热力树图 (Treemap) 资产洞察与微观 Dataframe 联动对标。
+1. **采集引擎层 (`scraper.py`)**：负责突破反爬协议、执行模拟滚动、提取数据并安全落盘。
+2. **数据落盘层 (高容错)**：SQLite (`weiq_data.db`) 负责并发容灾，Excel (`weiq_results.xlsx`) 负责交付查阅。
+3. **决策可视化层 (`main.py`)**：纯读取状态，零交互干扰。通过 Streamlit + Plotly 实现热力树图资产洞察。
 
 ---
+
+## ⚖️ 免责声明 (Disclaimer)
+
+1. **技术交流专用**：本项目仅供技术研究与学习参考，严禁用于任何非法商业采集或侵害他人的行为。
+2. **法律合规**：使用者应遵守相关法律法规及平台服务协议（ToS）。因不当使用导致的账号封禁或法律责任，由使用者自行承担，开发者不承担任何直接或间接责任。
+3. **数据隐私**：本项目为本地运行脚本，不具备任何上传、共享用户凭证或监控名单的功能。
+
 ---
 
-## 🛡️ 附录：如何在 GitHub 上安全更新这个项目 (双端操作指南)
+## 🛡️ 跨平台推送指南 (Git Guide)
 
-无论你是使用本地的 Windows 电脑，还是使用 MacBook 移动办公，以下是标准的跨平台推送流程：
+### 1. 终端进入项目
+* **🍏 Mac**: `cd ~/Documents/weiq-scraper-main`
+* **🪟 Win**: `cd /d E:\exe\cpm\weiq-scraper-main`
 
-### 1. 终极隐私检查（推送前的最后一道防线）
-打开你的项目文件夹，找到 `.gitignore` 文件并打开它。请确保里面**必须包含以下内容**。这一步是防止你的客户名单和敏感数据被泄露到公网上的核心操作：
-
-```text
-# 隐私与凭证文件 (绝对不能上传)
-state.json
-
-# 本地数据源与抓取结果 (保护你和你客户的商业数据)
-accounts.xlsx
-weiq_results*.xlsx
-~$*.xlsx
-weiq_data.db
-
-# Python 虚拟环境与缓存
-.venv/
-__pycache__/
-.pytest_cache/
-```
-
-### 2. 在终端执行代码推送
-
-**👉 步骤 A：打开终端并进入项目**
-
-* **🍏 Mac 端操作：**
-    按 `Cmd + Space (空格)` 呼出聚焦搜索，输入 `Terminal` 并回车打开终端。输入以下命令进入你的项目文件夹（请将路径替换为你实际存放的目录，例如在文稿中）：
-    ```bash
-    cd ~/Documents/weiq-scraper-main
-    ```
-
-* **🪟 Windows 端操作：**
-    按 `Win + R` 键，输入 `cmd` 后回车。输入以下命令进入你的本地项目路径：
-    ```cmd
-    cd /d E:\exe\cpm\weiq-scraper-main
-    ```
-
-**👉 步骤 B：执行 Git 推送指令 (Mac 与 Windows 通用)**
-
-将所有代码更改添加到 Git 暂存区：
+### 2. 执行安全推送
 ```bash
 git add .
-```
-*(由于配置了 `.gitignore`，这个命令只会静默添加 `.py` 代码和 `README.md`，你的 Excel 和 json 等敏感数据会被 Git 自动屏蔽。)*
-
-为这次重磅更新写上 Commit 留言：
-```bash
-git commit -m "feat: 重构商业级BI可视化大盘，升级底层反爬防封机制，完善项目文档"
-```
-
-最后，推送到 GitHub 仓库：
-```bash
-git push origin main
+git commit -m "feat: 升级专业化README，添加社交链接、Mac支持与免责声明"
+git push origin main -f
 ```
