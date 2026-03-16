@@ -4,7 +4,7 @@
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://streamlit.io/)
 [![Playwright](https://img.shields.io/badge/engine-Playwright-green.svg)](https://playwright.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![X Follow](https://img.shields.io/twitter/follow/youfei0719_?style=social)](https://x.com/youfei0719_)
+
 
 **专为 MCN 机构打造的“社交媒体资产自动化监控与商业价值评估系统”。**
 
@@ -14,7 +14,6 @@
 
 ## 🔗 保持联系 (Connect)
 如果您对本项目有任何建议，或者需要定制化的商业数据解决方案，欢迎联系：
-* **𝕏 (Twitter)**: [@youfei0719_](https://x.com/youfei0719_)
 * **GitHub**: [youfei0719](https://github.com/youfei0719)
 
 ---
